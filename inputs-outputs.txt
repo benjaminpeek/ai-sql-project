@@ -1,0 +1,150 @@
+INPUTS:
+questions = [
+    "Who are the customers with appointments today? Whether the appointments are in the past or future?",
+    "Which employees have appointments scheduled?",
+    "What is the total revenue from payments?",
+    "Which payment methods are most commonly used?",
+    "What is the average duration of all services?",
+    "Which employees are assigned to the most appointments?",
+    "Can you tell me about the people who work here and what they do?",
+    "How many appointments are scheduled for today, and which services are being provided?"
+]
+
+OUTPUTS:
+(base) benBookAir:byu-cs-452-class-content benjaminpeek$ python aisql/db_bot.py 
+Running db_bot.py!
+/Users/benjaminpeek/Desktop/CS 452/byu-cs-452-class-content/aisql/config.json
+Who are the customers with appointments today? Whether the appointments are in the past or future?
+
+SELECT DISTINCT Customers.name
+FROM Appointments
+JOIN Customers ON Appointments.customer_id = Customers.customer_id
+WHERE DATE(Appointments.appointment_date, 'localtime') = DATE('now', 'localtime');
+
+[(1, 'Alice Johnson')]
+Alice Johnson has an appointment today.
+Which employees have appointments scheduled?
+
+SELECT DISTINCT e.name
+FROM Employees e
+JOIN Appointments a ON e.employee_id = a.employee_id;
+
+[('Emma Davis',), ('Liam Wilson',)]
+Emma Davis and Liam Wilson have appointments scheduled.
+What is the total revenue from payments?
+
+SELECT SUM(amount) AS total_revenue FROM Payments;
+
+[(130.0,)]
+The total revenue from payments is $130.
+Which payment methods are most commonly used?
+
+SELECT payment_method, COUNT(payment_method) AS method_count
+FROM Payments
+GROUP BY payment_method
+ORDER BY method_count DESC;
+
+[('Credit Card', 2), ('Debit Card', 1), ('Cash', 1)]
+The most common payment method is Credit Card, followed by Debit Card and Cash.
+What is the average duration of all services?
+
+SELECT AVG(duration) AS average_duration FROM Services;
+
+[(45.0,)]
+The average duration of all services is 45 minutes.
+Which employees are assigned to the most appointments?
+
+SELECT Employees.name, COUNT(Appointments.appointment_id) AS appointment_count
+FROM Employees
+JOIN Appointments ON Employees.employee_id = Appointments.employee_id
+GROUP BY Employees.employee_id
+ORDER BY appointment_count DESC
+LIMIT 1;
+
+[('Liam Wilson', 2)]
+Liam Wilson has the most appointments, with 2 assigned.
+Can you tell me about the people who work here and what they do?
+
+SELECT employee_id, name, position FROM Employees;
+
+[(1, 'Emma Davis', 'Stylist'), (2, 'Liam Wilson', 'Barber'), (3, 'Olivia Martinez', 'Receptionist')]
+Sure! Emma is a stylist, Liam is a barber, and Olivia is the receptionist.
+How many appointments are scheduled for today, and which services are being provided?
+
+SELECT COUNT(Appointments.appointment_id) AS number_of_appointments, Services.service_name
+FROM Appointments
+JOIN Services ON Appointments.service_id = Services.service_id
+WHERE date(Appointments.appointment_date, 'localtime') = date('now', 'localtime')
+GROUP BY Services.service_name;
+
+[(1, 'Haircut')]
+There is 1 appointment scheduled today for a Haircut.
+Who are the customers with appointments today? Whether the appointments are in the past or future?
+
+SELECT c.customer_id, c.name
+FROM Customers c
+JOIN Appointments a ON c.customer_id = a.customer_id
+WHERE date(a.appointment_date) = date('now', 'localtime');
+
+[(1, 'Alice Johnson')]
+Today's appointment is with Alice Johnson.
+Which employees have appointments scheduled?
+
+SELECT DISTINCT e.employee_id, e.name
+FROM Employees e
+JOIN Appointments a ON e.employee_id = a.employee_id;
+
+[(1, 'Emma Davis'), (2, 'Liam Wilson')]
+Emma Davis and Liam Wilson have appointments scheduled.
+What is the total revenue from payments?
+
+SELECT SUM(amount) AS total_revenue
+FROM Payments;
+
+[(130.0,)]
+The total revenue from payments is $130.00.
+Which payment methods are most commonly used?
+
+SELECT payment_method, COUNT(*) AS usage_count
+FROM Payments
+GROUP BY payment_method
+ORDER BY usage_count DESC;
+
+[('Credit Card', 2), ('Debit Card', 1), ('Cash', 1)]
+The most common payment methods are credit cards, followed by debit cards and cash.
+What is the average duration of all services?
+
+SELECT AVG(duration) AS average_duration FROM Services;
+
+[(45.0,)]
+The average duration of all services is 45 minutes.
+Which employees are assigned to the most appointments?
+
+SELECT e.employee_id, e.name, COUNT(a.appointment_id) AS appointment_count
+FROM Employees e
+JOIN Appointments a ON e.employee_id = a.employee_id
+GROUP BY e.employee_id, e.name
+ORDER BY appointment_count DESC
+LIMIT 1;
+
+[(1, 'Emma Davis', 2)]
+Emma Davis is assigned to the most appointments, with a total of 2.
+Can you tell me about the people who work here and what they do?
+
+SELECT employee_id, name, position
+FROM Employees;
+
+[(1, 'Emma Davis', 'Stylist'), (2, 'Liam Wilson', 'Barber'), (3, 'Olivia Martinez', 'Receptionist')]
+Sure! Emma is our Stylist, Liam is our Barber, and Olivia is our Receptionist.
+How many appointments are scheduled for today, and which services are being provided?
+
+SELECT COUNT(a.appointment_id) AS number_of_appointments, s.service_name
+FROM Appointments a
+JOIN Services s ON a.service_id = s.service_id
+WHERE date(a.appointment_date) = date('now', 'localtime')
+GROUP BY s.service_name;
+
+[(1, 'Haircut')]
+You have 1 appointment scheduled today for a Haircut.
+Done!
+(base) benBookAir:byu-cs-452-class-content benjaminpeek$ 
