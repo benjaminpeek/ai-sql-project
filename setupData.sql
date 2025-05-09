@@ -17,7 +17,7 @@ INSERT INTO Appointments (appointment_id, customer_id, employee_id, service_id, 
 (1, 1, 1, 1, '2023-10-01', '10:00'),
 (2, 2, 2, 2, '2023-10-02', '11:00'),
 (3, 3, 1, 3, '2023-10-03', '12:00'),
-(4, 1, 2, 1, '2025-05-08', '14:00');
+(4, 1, 2, 1, '2025-05-08', '21:00');
 
 INSERT INTO Payments (payment_id, appointment_id, amount, payment_date, payment_method) VALUES
 (1, 1, 25.00, '2023-10-01', 'Credit Card'),
