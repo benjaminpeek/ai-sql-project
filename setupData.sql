@@ -23,4 +23,4 @@ INSERT INTO Payments (payment_id, appointment_id, amount, payment_date, payment_
 (1, 1, 25.00, '2023-10-01', 'Credit Card'),
 (2, 2, 50.00, '2023-10-02', 'Cash'),
 (3, 3, 30.00, '2023-10-03', 'Debit Card'),
-(4, 4, 25.00, '2025-05-08', 'Credit Card'); -- Payment for today's appointment
+(4, 4, 25.00, '2025-05-08', 'Credit Card');
