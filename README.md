@@ -27,7 +27,7 @@ We have Emma Davis, a stylist; Liam Wilson, a barber; and Olivia Martinez, our r
 Again, the response is in the same format: generated query, raw result, and readable result. I was shocked that ChatGPT was able to make a cohesive query that actually resulted in a successful result out of this question when it is somewhat vague. Super impressive for ChatGPT!
 
 ## All Outputs
-See all the inputs and outputs in the related files in the repo.
+See all the inputs and outputs in the inputs-outputs file in the repo.
 
 ## Prompting Strategies
 I used the same prompting strategies as those in the starter code. They worked great, and both produced very clear and readable responses, and also made similarly structured queries.
